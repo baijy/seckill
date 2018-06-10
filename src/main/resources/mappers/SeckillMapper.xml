@@ -13,7 +13,7 @@
 	<sql id="Base_Column_List">
 		seckill_id,name,number,start_time,end_time,create_time
 	</sql>
-	
+
 	<update id="reduceNumber">
 		update seckill set number=number-1 where seckill_id=#{seckillId}
 		and
@@ -30,7 +30,7 @@
 
 	</select>
 
-	<select id="queryAll" resultMap="BaseResultMap" >
+	<select id="queryAll" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from seckill
@@ -39,13 +39,26 @@
 	</select>
 
 	<select id="seckillByProcedure" statementType="CALLABLE">
+	<![CDATA[ 
 		call
 		execute_seckill(
 		#{seckillId,jdbcType=BIGINT,mode=IN},
 		#{phone,jdbcType=BIGINT,mode=IN},
 		#{killTime,jdbcType=TIMESTAMP,mode=IN},
 		#{result,jdbcType=INTEGER,mode=OUT}
-		)
+		);
+		]]>
+	</select>
+	
+	<select id="seckillByProcedureWith" parameterType="com.jianyu.dto.CallEntity" statementType="CALLABLE">
+	<![CDATA[ 
+		call execute_seckill(
+		#{seckillId,jdbcType=BIGINT,mode=IN},
+		#{userPhone,jdbcType=BIGINT,mode=IN},
+		#{killTime,jdbcType=DATE,mode=IN},
+		#{result,jdbcType=INTEGER,mode=OUT}
+		);
+		]]>
 	</select>
 
 </mapper>

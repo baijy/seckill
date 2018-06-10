@@ -16,6 +16,7 @@ import org.apache.commons.collections.MapUtils;
 import com.jianyu.cache.RedisDao;
 import com.jianyu.dao.SeckillMapper;
 import com.jianyu.dao.SuccessKillMapper;
+import com.jianyu.dto.CallEntity;
 import com.jianyu.dto.Exposer;
 import com.jianyu.dto.SeckillExecution;
 import com.jianyu.entity.Seckill;
@@ -166,11 +167,18 @@ public class SeckillServiceImpl implements SeckillService {
 		map.put("phone", userPhone);
 		map.put("killTime", killTime);
 		map.put("result", null);
+		
+		CallEntity entity = new CallEntity();
+		entity.setKillTime(new java.sql.Date(killTime.getTime()));
+		entity.setSeckillId(seckillId);
+		entity.setUserPhone(userPhone);
+		entity.setResult(-9);
 
 		// 执行存储过程，赋值result
 		try {
 			// 秒杀商品，获得结果
-			seckillMapper.seckillByProcedure(map);
+			//seckillMapper.seckillByProcedure(map);
+			seckillMapper.seckillByProcedureWith(entity);
 
 			int result = MapUtils.getInteger(map, "result", -2);
 			// 返回结果
