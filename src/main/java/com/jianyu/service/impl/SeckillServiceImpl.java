@@ -5,18 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import org.apache.commons.collections.MapUtils;
-
 import com.jianyu.cache.RedisDao;
 import com.jianyu.dao.SeckillMapper;
 import com.jianyu.dao.SuccessKillMapper;
-import com.jianyu.dto.CallEntity;
 import com.jianyu.dto.Exposer;
 import com.jianyu.dto.SeckillExecution;
 import com.jianyu.entity.Seckill;
@@ -168,17 +166,11 @@ public class SeckillServiceImpl implements SeckillService {
 		map.put("killTime", killTime);
 		map.put("result", null);
 		
-		CallEntity entity = new CallEntity();
-		entity.setKillTime(new java.sql.Date(killTime.getTime()));
-		entity.setSeckillId(seckillId);
-		entity.setUserPhone(userPhone);
-		entity.setResult(-9);
-
 		// 执行存储过程，赋值result
 		try {
 			// 秒杀商品，获得结果
-			//seckillMapper.seckillByProcedure(map);
-			seckillMapper.seckillByProcedureWith(entity);
+			// 只能用map调用，这样才可以接收返回值
+			seckillMapper.seckillByProcedure(map);
 
 			int result = MapUtils.getInteger(map, "result", -2);
 			// 返回结果

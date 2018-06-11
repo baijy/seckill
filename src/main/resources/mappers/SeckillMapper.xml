@@ -13,6 +13,13 @@
 	<sql id="Base_Column_List">
 		seckill_id,name,number,start_time,end_time,create_time
 	</sql>
+	
+	<parameterMap type="java.util.Map" id="paramMap">
+		<parameter property="seckillId" mode="IN" jdbcType="BIGINT" />
+		<parameter property="phone" mode="IN" jdbcType="BIGINT" />
+		<parameter property="killTime" mode="IN" jdbcType="DATE" />
+		<parameter property="result" mode="OUT" jdbcType="INTEGER" />
+	</parameterMap>
 
 	<update id="reduceNumber">
 		update seckill set number=number-1 where seckill_id=#{seckillId}
@@ -38,26 +45,9 @@
 		limit #{offset},#{limit}
 	</select>
 
-	<select id="seckillByProcedure" statementType="CALLABLE">
-	<![CDATA[ 
-		call
-		execute_seckill(
-		#{seckillId,jdbcType=BIGINT,mode=IN},
-		#{phone,jdbcType=BIGINT,mode=IN},
-		#{killTime,jdbcType=TIMESTAMP,mode=IN},
-		#{result,jdbcType=INTEGER,mode=OUT}
-		);
-		]]>
-	</select>
-	
-	<select id="seckillByProcedureWith" parameterType="com.jianyu.dto.CallEntity" statementType="CALLABLE">
-	<![CDATA[ 
-		call execute_seckill(
-		#{seckillId,jdbcType=BIGINT,mode=IN},
-		#{userPhone,jdbcType=BIGINT,mode=IN},
-		#{killTime,jdbcType=DATE,mode=IN},
-		#{result,jdbcType=INTEGER,mode=OUT}
-		);
+	<select id="seckillByProcedure" parameterMap="paramMap" statementType="CALLABLE">
+		<![CDATA[ 
+			call execute_seckill(?,?,?,?)
 		]]>
 	</select>
 
