@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.jianyu.dto.CallEntity;
 import com.jianyu.entity.Seckill;
 
 public interface SeckillMapper {
@@ -41,10 +40,4 @@ public interface SeckillMapper {
 	 * @param paramMap
 	 */
 	public void seckillByProcedure(Map<String, Object> paramMap);
-	
-	/**
-	 * 使用存储过程秒杀商品
-	 * @param paramMap
-	 */
-	public void seckillByProcedureWith(CallEntity entity);
 }
