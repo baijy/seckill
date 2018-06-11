@@ -1,5 +1,6 @@
 package com.jianyu.service.impl;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -159,11 +160,13 @@ public class SeckillServiceImpl implements SeckillService {
 		}
 
 		Date killTime = new Date();
+		Timestamp time = new Timestamp(killTime.getTime());
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map.put("seckillId", seckillId);
 		map.put("phone", userPhone);
-		map.put("killTime", killTime);
+		map.put("killTime", time);
 		map.put("result", null);
 		
 		// 执行存储过程，赋值result

@@ -17,7 +17,7 @@
 	<parameterMap type="java.util.Map" id="paramMap">
 		<parameter property="seckillId" mode="IN" jdbcType="BIGINT" />
 		<parameter property="phone" mode="IN" jdbcType="BIGINT" />
-		<parameter property="killTime" mode="IN" jdbcType="DATE" />
+		<parameter property="killTime" mode="IN" jdbcType="TIMESTAMP" />
 		<parameter property="result" mode="OUT" jdbcType="INTEGER" />
 	</parameterMap>
 
